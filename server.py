@@ -5,6 +5,11 @@ import sys
 
 NUMBER_OF_THREADS = 2
 JOB_NUMBER[1,2]
+queue = Queue()
+all_connections = []
+all_addresses = []
+
+
 #create socket (allows two computers to connect)
 def socket_create():
     try:
@@ -57,3 +62,19 @@ def main():
     socket_accept()
 
 main()
+
+# accept connections from multiple clients and save to list
+
+def accept_connections():
+    for c in all_connections:
+        c.close()
+    del all_connections[:]
+    while 1:
+        try:
+            conn,address = s.accept()
+            conn.setblocking(1)
+            all_connections.append(conn)
+            all_addresses.append(address)
+            print('\nConnection has been established: ' +address[0])
+        except:
+            print('error accepting connections')
