@@ -134,3 +134,32 @@ def send_target_commands(conn):
         except:
             print('connection was lost')
             break
+
+
+#create worker threads
+def create_workers():
+    for _ in range(NUMBER_OF_THREADS):
+        t = threading.Thread(target=work)
+        t.daemon = True
+        t.start()
+
+#do the next job in the queue (one handles connections,other sends commands)
+def work():
+    while True:
+        x = queue.get()
+        if x == 1:
+            socket_create()
+            socket_bind()
+            accept_connections()
+        if x == 2:
+            start_tutle()
+        queue.task_done()
+
+# each list item is a new job
+def create_jobs():
+    for x in JOB_NUMBER:
+        queue.put(x)
+    queue.join()
+
+create_workers()
+create_jobs()
