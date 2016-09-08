@@ -1,8 +1,11 @@
 import socket
+import threading
+from queue import Queue
 import sys
 
+NUMBER_OF_THREADS = 2
+JOB_NUMBER[1,2]
 #create socket (allows two computers to connect)
-
 def socket_create():
     try:
         global host
