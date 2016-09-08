@@ -83,7 +83,7 @@ def accept_connections():
 def start_tutle():
     while 1:
         cmd = imput('tutle >')
-        if =='list':
+        if cmd=='list':
             list_connections()
         elif 'select' in cmd:
             conn = get_target(cmd)
@@ -91,3 +91,16 @@ def start_tutle():
                 send_target_commands(conn)
         else:
             print('Command not recognised')
+
+#Displays all current connections
+def list_connections():
+    results =''
+
+    for i,cnn in enumerate(all_connections):
+        try:
+            conn.send(str,encode(' '))
+            conn.recv(20480)
+        except:
+            del all_connections[i]
+            del all_addresses[i]
+            continue
